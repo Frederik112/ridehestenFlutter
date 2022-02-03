@@ -18,8 +18,9 @@ class MyApp extends StatelessWidget {
       title: 'Startup Name Generator',
       theme: ThemeData(
         primaryColor: Colors.red[900],
+        primarySwatch: Colors.red,
       ),
-      home: RandomWords(),
+      home: const RandomWords(),
     );
   }
 }
@@ -36,12 +37,12 @@ class _RandomWordsState extends State<RandomWords> {
   Widget _buildSuggestions() {
     return ListView.builder(
         padding: const EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return const Divider(); /*2*/
+        itemBuilder: (context, i) {
+          if (i.isOdd) return const Divider();
 
-          final index = i ~/ 2; /*3*/
+          final index = i ~/ 2;
           if (index >= _suggestions.length) {
-            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
+            _suggestions.addAll(generateWordPairs().take(10));
           }
           return _buildRow(_suggestions[index]);
         });
@@ -55,9 +56,9 @@ class _RandomWordsState extends State<RandomWords> {
           ListTile(
             leading: const Icon(Icons.arrow_drop_down_circle),
             title: Text(pair.asCamelCase),
-            trailing: Wrap(children: <Widget>[
-              const Icon(Icons.favorite_outline),
-              const Icon(Icons.share)
+            trailing: Wrap(children: const <Widget>[
+              Icon(Icons.favorite_outline),
+              Icon(Icons.share)
             ]),
             subtitle: Text(
               'Teaser text',
@@ -66,11 +67,13 @@ class _RandomWordsState extends State<RandomWords> {
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Wrap(children: <Widget>[
+            child: Table(columnWidths: const {
+              0: FlexColumnWidth(0.3)
+            }, children: [
               _cardTextDetail("Type", "Hingst"),
-              _cardTextDetail("Type", "Hingst"),
+              _cardTextDetail("Højde", "Hingst"),
               _cardTextDetail("Far", "Alfred af Daneborg"),
-              _cardTextDetail("Type", "Oscar af Marienborg")
+              _cardTextDetail("Morfar", "Oscar af Marienborg")
             ]),
           ),
           ButtonBar(
@@ -80,7 +83,10 @@ class _RandomWordsState extends State<RandomWords> {
                 onPressed: () {
                   // Perform some action
                 },
-                child: const Text('ACTION 1'),
+                child: Text(
+                  'LÆS MERE',
+                  style: TextStyle(color: (Colors.red[900])),
+                ),
               ),
             ],
           ),
@@ -89,10 +95,18 @@ class _RandomWordsState extends State<RandomWords> {
     );
   }
 
-  Widget _cardTextDetail(String name, String value) {
-    return Row(
-        children: [Text(name + ": " + value)],
-        mainAxisAlignment: MainAxisAlignment.start);
+  TableRow _cardTextDetail(String name, String value) {
+    // return Row(children: [
+    //   Column(children: [Text(name)]),
+    //   Column(children: [Text(value)])
+    // ], mainAxisAlignment: MainAxisAlignment.start);
+    return TableRow(children: [
+      Text(
+        name + ":",
+        style: const TextStyle(fontWeight: FontWeight.w600),
+      ),
+      Text(value)
+    ]);
   }
 
   @override
