@@ -71,7 +71,7 @@ class _RandomWordsState extends State<RandomWords> {
               0: FlexColumnWidth(0.3)
             }, children: [
               _cardTextDetail("Type", "Hingst"),
-              _cardTextDetail("Højde", "Hingst"),
+              _cardTextDetail("Højde", "174 cm"),
               _cardTextDetail("Far", "Alfred af Daneborg"),
               _cardTextDetail("Morfar", "Oscar af Marienborg")
             ]),
